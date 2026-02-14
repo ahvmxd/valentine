@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carta de Amor</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+html,body{
+  margin:0;
+  background:#efe4d2;
+  font-family:'Playfair Display', serif;
+}
+
+/* PAPER GRAIN + AGE */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      rgba(0,0,0,.02) 0,
+      rgba(0,0,0,.02) 1px,
+      transparent 2px,
+      transparent 4px
+    ),
+    repeating-radial-gradient(
+      circle,
+      rgba(0,0,0,.02) 0,
+      rgba(0,0,0,.02) 1px,
+      transparent 2px
+    );
+  pointer-events:none;
+}
+
+/* FALLING PETALS */
+.fall{
+  position:fixed;
+  top:-10vh;
+  font-size:20px;
+  animation:fall linear infinite;
+  pointer-events:none;
+}
+@keyframes fall{
+  to{transform:translateY(110vh) rotate(360deg);opacity:0;}
+}
+
+/* ENVELOPE */
+.envelope{
+  position:fixed;
+  inset:0;
+  margin:auto;
+  width:340px;
+  height:240px;
+  background:#fff9ef;
+  border-radius:18px;
+  box-shadow:
+    inset 0 0 25px rgba(0,0,0,.08),
+    0 30px 70px rgba(0,0,0,.35);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+.envelope .to{
+  font-family:'Great Vibes', cursive;
+  font-size:30px;
+  color:#4a2f2f;
+}
+.envelope .from{
+  font-style:italic;
+  color:#5a3a3a;
+}
+
+.seal{
+  width:52px;
+  height:52px;
+  background:#8f1d2c;
+  border-radius:50%;
+  margin:12px 0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:22px;
+  box-shadow:
+    inset 0 -3px 6px rgba(0,0,0,.35),
+    0 6px 14px rgba(0,0,0,.35);
+  transition:.6s;
+}
+.seal.crack{
+  transform:scale(1.6) rotate(25deg);
+  opacity:0;
+}
+
+.open-btn{
+  padding:10px 22px;
+  border:2px solid #8f1d2c;
+  border-radius:30px;
+  background:none;
+  color:#8f1d2c;
+  font-family:'Great Vibes', cursive;
+  font-size:20px;
+  cursor:pointer;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  50%{transform:scale(1.08);}
+}
+
+/* LETTER */
+.letter{
+  display:none;
+  max-width:760px;
+  margin:40px auto;
+  background:#fdf7ec;
+  border-radius:20px;
+  padding:38px 34px 48px;
+  box-shadow:
+    inset 0 0 90px rgba(0,0,0,.22),
+    inset 0 0 12px rgba(120,90,60,.25),
+    0 40px 90px rgba(0,0,0,.45);
+  position:relative;
+}
+
+/* VIGNETTE */
+.letter::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:20px;
+  box-shadow:inset 0 0 80px rgba(0,0,0,.25);
+  pointer-events:none;
+}
+
+/* MAIN TEXT */
+.text{
+  font-size:16px;
+  line-height:1.75;
+  color:#3a2a2a;
+  font-weight:600;
+}
+
+/* LOVE LINE */
+.love-line{
+  margin-top:28px;
+  text-align:center;
+  font-size:20px;
+  font-weight:600;
+  color:#4a2a2a;
+}
+
+/* SIGNATURE */
+.signature{
+  font-family:'Great Vibes', cursive;
+  font-size:52px;
+  text-align:right;
+  margin-top:18px;
+  padding-right:10px;
+  background:linear-gradient(120deg,#2b0f0f,#7a1e1e,#2b0f0f);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:sign 2.5s ease forwards;
+}
+@keyframes sign{
+  from{opacity:0;transform:translateY(6px);}
+  to{opacity:1;}
+}
+
+/* FOOTER */
+.footer{
+  margin-top:10px;
+  text-align:center;
+  font-style:italic;
+  font-size:14px;
+  color:#5a3a3a;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  .letter{
+    margin:20px 14px;
+    padding:30px 22px 40px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<script>
+function fallStuff(sym,c){
+  for(let i=0;i<c;i++){
+    let e=document.createElement("div");
+    e.className="fall";
+    e.style.left=Math.random()*100+"vw";
+    e.style.animationDuration=(6+Math.random()*5)+"s";
+    e.innerHTML=sym;
+    document.body.appendChild(e);
+    setTimeout(()=>e.remove(),12000);
+  }
+}
+function openLetter(){
+  document.getElementById("seal").classList.add("crack");
+  setTimeout(()=>{
+    document.getElementById("env").style.display="none";
+    document.getElementById("letter").style.display="block";
+    fallStuff("🌸",18);
+    fallStuff("🌹",14);
+    fallStuff("❤️",10);
+  },600);
+}
+</script>
+
+<div class="envelope" id="env">
+  <div class="to">Para: Alice Matos</div>
+  <div class="from">De: Ahmed</div>
+  <div class="seal" id="seal">❤️</div>
+  <button class="open-btn" onclick="openLetter()">Clica para abrir</button>
+</div>
+
+<div class="letter" id="letter">
+  <div class="text">
+    Feliz Dia dos Namorados, linda. ❤️ Sei que estamos separados por quase 9.000 km, mas quis tornar este dia especial para ti da melhor forma que consegui.
+    <br><br>
+    Tenho até andado à procura de estações de correio perto de mim para te poder enviar cartas de verdade — algo que possas segurar e saber que veio de mim.
+    <br><br>
+    Mesmo não falarmos a mesma língua, os meus sentimentos por ti sempre foram claros e reais.
+    <br><br>
+    És genuinamente uma das pessoas mais bondosas e reais que conheci em muito tempo.
+    <br><br>
+    Prometo que nunca te faria mal e que terei sempre orgulho em ti, independentemente de onde a vida te leve ou de quão difíceis as coisas se tornem.
+    <br><br>
+    Sei o quão forte és, mesmo nos dias em que não consegues ver isso em ti própria.
+    <br><br>
+    Estou a tentar todos os dias ser melhor por ti, mesmo quando erro às vezes — como ainda acender um cigarro, e peço desculpa por isso.
+    <br><br>
+    Isto é o mínimo que posso fazer por alguém que amo. Se estivesse aí contigo, dar-te-ia muito mais, mas até lá lembra-te que o meu coração está contigo. ❤️
+  </div>
+
+  <div class="love-line">Amo-te ❤️</div>
+  <div class="signature">Ahmed</div>
+  <div class="footer">O dia em que nos conhecemos — Quinta-feira, 8 de Janeiro de 2026</div>
+</div>
+
+</body>
+</html>
